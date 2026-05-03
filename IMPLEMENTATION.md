@@ -60,3 +60,10 @@
 - `useEffect` with empty dependency array ensures fetch runs once on mount
 - Browser `fetch` API used (no axios/external libs as required)
 - Loading/error states provide proper UX feedback during data fetching
+
+### Refactor: Modular Code Structure
+Moved controller logic from App.jsx to `src/hooks/useStoryController.js`:
+- Created custom hook `useStoryController` to separate logic from view
+- App.jsx now only handles rendering (view layer)
+- Hook returns state and setters: `stories`, `loading`, `error`, `isViewerOpen`, `setIsViewerOpen`, `currentStoryIndex`, `setCurrentStoryIndex`
+- This separation improves maintainability and follows React best practices
