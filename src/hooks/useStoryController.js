@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 
 export function useStoryController() {
-  const [stories, setStories] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
+  const [selectedUserIndex, setSelectedUserIndex] = useState(0);
   const [currentStoryIndex, setCurrentStoryIndex] = useState(0);
 
   useEffect(() => {
@@ -17,7 +18,7 @@ export function useStoryController() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setStories(data);
+        setUsers(data);
       } catch (err) {
         setError(err.message || "Failed to fetch stories");
       } finally {
@@ -29,11 +30,13 @@ export function useStoryController() {
   }, []);
 
   return {
-    stories,
+    users,
     loading,
     error,
     isViewerOpen,
     setIsViewerOpen,
+    selectedUserIndex,
+    setSelectedUserIndex,
     currentStoryIndex,
     setCurrentStoryIndex,
   };

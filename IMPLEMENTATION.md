@@ -67,3 +67,49 @@ Moved controller logic from App.jsx to `src/hooks/useStoryController.js`:
 - App.jsx now only handles rendering (view layer)
 - Hook returns state and setters: `stories`, `loading`, `error`, `isViewerOpen`, `setIsViewerOpen`, `currentStoryIndex`, `setCurrentStoryIndex`
 - This separation improves maintainability and follows React best practices
+
+---
+
+## Phase 4: Components Implementation ✅ (Done)
+
+### What was done
+1. **Created shared components:**
+   - `LoadingSpinner`: Pure CSS spinner using keyframe animation
+   - `ErrorMessage`: Displays error text with red styling
+
+2. **StoryList Component:**
+   - Horizontal scrollable list with `overflow-x: auto`
+   - Shows users (not individual stories) with circular thumbnails
+   - Uses first story image as user thumbnail (`user.stories[0].imageUrl`)
+   - Displays username below each circular thumbnail
+   - Hide scrollbar with `::-webkit-scrollbar { display: none }`
+
+3. **StoryViewer Component:**
+   - Full-screen fixed overlay (black background, z-index 999)
+   - **Navigation**: Two transparent 50% width zones (left = previous, right = next)
+   - **Auto-advance**: 5-second `setTimeout`, cleared/reset on story change
+   - **Image loading**: Uses `loadedStoryId` state to track which story's image loaded
+   - **Loading logic**: `isImageLoading = loadedStoryId !== currentStory.id`
+   - **Image key prop**: `key={currentStory.id}` forces React to remount `<img>` on story change
+   - **Progress bar**: Shows active/completed segments with 5s CSS animation
+   - **Close button**: Top-right X button to exit viewer
+
+4. **Data Structure Update:**
+   - `stories.json` now has user-based structure with `username` and `stories` array
+   - 5 users, each with 2-4 stories
+   - Controller updated to manage `users`, `selectedUserIndex`, `currentStoryIndex`
+
+5. **CSS Styles:**
+   - Spinner animation with `transform: rotate()` keyframes
+   - Story list: flexbox with gap, circular thumbnails with border
+   - Story viewer: full-screen, centered image with `object-fit: contain`
+   - Navigation zones: absolute positioned, 50% width each
+   - Progress bar with CSS animation for 5s timer
+
+### Why
+- Component separation makes code modular and maintainable
+- User-based structure matches Instagram's UI (users have multiple stories)
+- `loadedStoryId` approach fixes race condition in image loading state
+- `key={currentStory.id}` ensures `onLoad` fires for each new image
+- 5s auto-advance with timer cleanup prevents memory leaks
+- CSS-only transitions avoid external animation libraries
