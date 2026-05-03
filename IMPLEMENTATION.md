@@ -39,3 +39,24 @@
 - `npm run build` completed successfully
 - No broken imports or missing files
 - Dev server starts at `http://localhost:5173/`
+
+---
+
+## Phase 3: Core State & Data Fetching ✅ (Done)
+
+### What was done
+- Added state variables using React hooks:
+  - `stories`: Array to store fetched stories (initial `[]`)
+  - `loading`: Boolean for fetch state (initial `true`)
+  - `error`: String for error messages (initial `null`)
+  - `isViewerOpen`: Boolean to toggle story viewer (initial `false`)
+  - `currentStoryIndex`: Integer for current story position (initial `0`)
+- Implemented `useEffect` hook to fetch `/stories.json` on component mount
+- Added try-catch-finally pattern for fetch with proper state updates
+- Render logic: shows spinner during loading, error message on failure, story count when loaded
+
+### Why
+- Centralized state management in App component keeps data flow clear
+- `useEffect` with empty dependency array ensures fetch runs once on mount
+- Browser `fetch` API used (no axios/external libs as required)
+- Loading/error states provide proper UX feedback during data fetching
