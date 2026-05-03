@@ -20,18 +20,20 @@
 2. **StoryViewer**: Full-screen overlay, left/right tap navigation, 5s auto-advance, image loading states
 3. **Shared**: Pure CSS spinner, error message with retry
 
-## Phase 5: Styling (Pending)
+## Phase 5: Styling ✅ (Done)
 - Hide StoryList scrollbar, image `object-fit: contain`
 - Enforce 480px mobile-only layout
-- Optional story transition CSS
+- Added slide transitions (optional requirement)
+- Mobile touch optimizations (no zoom, no text selection)
 
-## Phase 6: Integration & Verification (Pending)
+## Phase 6: Integration & Verification ✅ (Done)
 - Wire components in App.jsx
 - Verify all requirements:
   ✅ Mobile-only, React only, no external core libs
   ✅ Horizontal scrollable story list from external file
   ✅ Tap to open, left/right navigation, 5s auto-advance
   ✅ Proper loading states, images only
+  ✅ Build passes with no errors
 
 ## Phase 7: Test (Pending)
 - Test all interactions: scroll, tap, navigation, auto-advance, error/retry

@@ -2,7 +2,9 @@ import { useState, useRef, useEffect } from "react";
 
 function StoryViewer({ stories, currentStoryIndex, onClose, onPrevious, onNext }) {
   const [loadedStoryId, setLoadedStoryId] = useState(null);
+  const [slideDirection, setSlideDirection] = useState(null);
   const timerRef = useRef(null);
+  const prevIndexRef = useRef(currentStoryIndex);
 
   const currentStory = stories[currentStoryIndex];
 
@@ -18,6 +20,7 @@ function StoryViewer({ stories, currentStoryIndex, onClose, onPrevious, onNext }
       if (currentStoryIndex === stories.length - 1) {
         onClose();
       } else {
+        setSlideDirection('left');
         onNext();
       }
     }, 5000);
@@ -30,8 +33,21 @@ function StoryViewer({ stories, currentStoryIndex, onClose, onPrevious, onNext }
     };
   }, [currentStoryIndex, stories.length, onClose, onNext]);
 
+  // Track navigation direction
+  useEffect(() => {
+    if (prevIndexRef.current !== currentStoryIndex) {
+      if (prevIndexRef.current < currentStoryIndex) {
+        setSlideDirection('left');
+      } else {
+        setSlideDirection('right');
+      }
+      prevIndexRef.current = currentStoryIndex;
+    }
+  }, [currentStoryIndex]);
+
   const handleLeftTap = () => {
     if (currentStoryIndex > 0) {
+      setSlideDirection('right');
       onPrevious();
     }
   };
@@ -40,6 +56,7 @@ function StoryViewer({ stories, currentStoryIndex, onClose, onPrevious, onNext }
     if (currentStoryIndex === stories.length - 1) {
       onClose();
     } else {
+      setSlideDirection('left');
       onNext();
     }
   };
@@ -75,7 +92,7 @@ function StoryViewer({ stories, currentStoryIndex, onClose, onPrevious, onNext }
         key={currentStory.id}
         src={currentStory.imageUrl}
         alt={`Story ${currentStory.id}`}
-        className="story-image"
+        className={`story-image ${slideDirection ? `slide-${slideDirection}` : ''}`}
         onLoad={handleImageLoad}
         onError={handleImageError}
         style={{ opacity: isImageLoading ? 0 : 1 }}

@@ -2,12 +2,20 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  overflow-x: hidden;
+  position: relative;
+  height: 100%;
 }
 
 #root {
   max-width: 480px;
   margin: 0 auto;
   min-height: 100vh;
+  position: relative;
 }
 
 /* Spinner */
@@ -72,11 +80,14 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile */
   background: black;
   z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;
+  touch-action: manipulation; /* Prevent double-tap zoom */
+  user-select: none; /* Prevent text selection */
 }
 
 .close-btn {
@@ -115,6 +126,24 @@
   max-height: 100%;
   object-fit: contain;
   transition: opacity 0.3s ease;
+}
+
+.story-image.slide-left {
+  animation: slideLeft 0.3s ease;
+}
+
+.story-image.slide-right {
+  animation: slideRight 0.3s ease;
+}
+
+@keyframes slideLeft {
+  0% { transform: translateX(100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideRight {
+  0% { transform: translateX(-100%); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
 }
 
 /* Viewer Spinner */
